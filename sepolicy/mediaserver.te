@@ -1,0 +1,12 @@
+allow mediaserver sysfs_wake_lock:file { open read write };
+allow mediaserver system_data_file:file { open read };
+allow mediaserver system_data_file:dir { add_name write };
+allow mediaserver system_server:unix_stream_socket { read write setopt };
+allow mediaserver system_prop:property_service set;
+
+# Playback DRM protected content
+allow mediaserver secmem_device:chr_file rw_file_perms;
+r_dir_file(mediaserver, efs_file)
+
+#avc: denied { write } for name="CameraID.txt" dev="mmcblk0p21" ino=13 scontext=u:r:mediaserver:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+#allow mediaserver system_data_file:file { write };

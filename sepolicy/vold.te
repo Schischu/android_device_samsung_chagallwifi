@@ -1,0 +1,8 @@
+allow vold vold_tmpfs:file create_file_perms;
+
+# UMS 
+allow vold proc:file rw_file_perms;
+allow vold kernel:system module_request;
+
+#W/vold    ( 2878): type=1400 audit(0.0:121): avc: denied { getattr } for path="/efs" dev="mmcblk0p3" ino=2 scontext=u:r:vold:s0 tcontext=u:object_r:efs_file:s0 tclass=dir
+allow vold efs_file:dir { getattr };

@@ -1,0 +1,4 @@
+dontaudit domain rootfs:chr_file { read write };
+
+#avc: denied { module_request } for kmod="personality-8" scontext=u:r:blkid_untrusted:s0 tcontext=u:r:kernel:s0 tclass=system permissive=1
+dontaudit domain kernel:system module_request;
