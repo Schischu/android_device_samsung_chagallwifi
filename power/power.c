@@ -19,7 +19,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#define LOG_TAG "Chagallwifi PowerHAL"
+#define LOG_TAG "Chagall PowerHAL"
 #include <utils/Log.h>
 
 #include <hardware/hardware.h>
@@ -59,8 +59,8 @@ static void power_init(struct power_module *module)
 
 static void power_set_interactive(struct power_module *module, int on)
 {
-//    ALOGE("power_set_interactive called: value: %d,", on);
-    write_int(TSP_POWER, on?1:0);
+    //ALOGD("%s: %s input devices", __func__, on ? "enabling" : "disabling");
+    write_int(TSP_POWER, on ? 1 : 0);
 }
 
 static void power_hint(struct power_module *module, power_hint_t hint,
@@ -81,7 +81,7 @@ struct power_module HAL_MODULE_INFO_SYM = {
         .module_api_version = POWER_MODULE_API_VERSION_0_2,
         .hal_api_version = HARDWARE_HAL_API_VERSION,
         .id = POWER_HARDWARE_MODULE_ID,
-        .name = "Chagallwifi Power HAL",
+        .name = "Chagall Power HAL",
         .author = "The CyanogenMod Project",
         .methods = &power_module_methods,
     },
