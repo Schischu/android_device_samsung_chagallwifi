@@ -68,6 +68,8 @@ PRODUCT_COPY_FILES += \
     \
     frameworks/native/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml \
     frameworks/native/data/etc/android.software.webview.xml:system/etc/permissions/android.software.webview.xml \
+    \
+    frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml
 
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi xxhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
@@ -108,6 +110,7 @@ PRODUCT_PACKAGES += \
     tinymix
 
 PRODUCT_PACKAGES += \
+    libion_exynos \
     libexynoscamera \
     camera.universal5420 \
     libhwjpeg
@@ -130,7 +133,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     consumerir.universal5420
 
-PRODUCT_PACKAGES_NN += \
+#Needed for at least adb on userbuild
+PRODUCT_PACKAGES += \
     keystore.exynos5
 
 PRODUCT_PACKAGES += \
@@ -203,4 +207,5 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # setup dalvik vm configs.
 $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
 
-$(call inherit-product, vendor/samsung/chagallwifi-fallback/chagallwifi-fallback-vendor.mk)
+#$(call inherit-product, vendor/samsung/chagallwifi-fallback/chagallwifi-fallback-vendor.mk)
+$(call inherit-product, vendor/samsung/chagallwifi/chagallwifi-vendor.mk)
