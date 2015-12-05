@@ -1,7 +1,0 @@
-allow init drmserver_service:service_manager add;
-
-#avc: denied { create } for name="sdcard" scontext=u:r:init:s0 tcontext=u:object_r:tmpfs:s0 tclass=lnk_file permissive=1
-allow init tmpfs:lnk_file { create };
-
-#avc: denied { write } for name="property_service" dev="tmpfs" ino=6231 scontext=u:r:init:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=1
-allow init property_socket:sock_file { write };

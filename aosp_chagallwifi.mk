@@ -29,7 +29,9 @@ PRODUCT_BRAND := samsung
 PRODUCT_MODEL := SM-T800
 PRODUCT_MANUFACTURER := samsung
 
+$(call inherit-product, device/samsung/chagall-klimt-common/device.mk)
 $(call inherit-product, device/samsung/chagallwifi/device.mk)
+
 $(call inherit-product-if-exists, vendor/samsung/chagallwifi/device-vendor.mk)
 
 PRODUCT_NAME := aosp_chagallwifi

@@ -1,8 +1,0 @@
-#avc: denied { getattr } for path="/dev/block/mmcblk0p3" dev="tmpfs" ino=4141 scontext=u:r:fsck:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file permissive=1
-#avc: denied { read } for name="mmcblk0p3" dev="tmpfs" ino=4141 scontext=u:r:fsck:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file permissive=1
-#avc: denied { open } for name="mmcblk0p3" dev="tmpfs" ino=4141 scontext=u:r:fsck:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file permissive=1
-#avc: denied { write } for name="mmcblk0p3" dev="tmpfs" ino=4141 scontext=u:r:fsck:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file permissive=1
-#avc: denied { ioctl } for path="/dev/block/mmcblk0p3" dev="tmpfs" ino=4141 ioctlcmd=127c scontext=u:r:fsck:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file permissive=1
-allow fsck block_device:blk_file { getattr ioctl };
-#allow fsck block_device:blk_file { open read getattr write ioctl };
-

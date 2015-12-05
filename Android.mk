@@ -20,35 +20,4 @@ ifeq ($(TARGET_DEVICE),chagallwifi)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
 
-include $(CLEAR_VARS)
-
-# Create links for wifi data files
-$(shell mkdir -p $(TARGET_OUT_ETC)/wifi; \
-	ln -sf /system/etc/wifi/bcmdhd_apsta.bin \
-		$(TARGET_OUT_ETC)/wifi/bcmdhd_apsta.bin_4354_a1;\
-	ln -sf /system/etc/wifi/bcmdhd_apsta.bin_a0 \
-		$(TARGET_OUT_ETC)/wifi/bcmdhd_apsta.bin_4354_a0;\
-	\
-	ln -sf /system/etc/wifi/bcmdhd_ibss.bin \
-		$(TARGET_OUT_ETC)/wifi/bcmdhd_ibss.bin_4354_a1;\
-	ln -sf /system/etc/wifi/bcmdhd_ibss.bin_a0 \
-		$(TARGET_OUT_ETC)/wifi/bcmdhd_ibss.bin_4354_a0;\
-	\
-	ln -sf /system/etc/wifi/bcmdhd_mfg.bin \
-		$(TARGET_OUT_ETC)/wifi/bcmdhd_mfg.bin_4354_a1;\
-	ln -sf /system/etc/wifi/bcmdhd_mfg.bin_a0 \
-		$(TARGET_OUT_ETC)/wifi/bcmdhd_mfg.bin_4354_a0;\
-	\
-	ln -sf /system/etc/wifi/bcmdhd_sta.bin \
-		$(TARGET_OUT_ETC)/wifi/bcmdhd_sta.bin_4354_a1;\
-	ln -sf /system/etc/wifi/bcmdhd_sta.bin_a0 \
-		$(TARGET_OUT_ETC)/wifi/bcmdhd_sta.bin_4354_a0;\
-	)
-
-# Create links for opencl data files
-$(shell mkdir -p $(TARGET_OUT_VENDOR_SHARED_LIBRARIES); \
-	ln -sf /system/vendor/lib/egl/libGLES_mali.so \
-		$(TARGET_OUT_VENDOR_SHARED_LIBRARIES)/libOpenCL.so.1.1;\
-	)
-
 endif
