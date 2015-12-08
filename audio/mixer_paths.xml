@@ -51,8 +51,8 @@
   <ctl name="AIF2TX2 Input 1" value="ASRC1R" />
   <ctl name="AIF1TX1 Input 2" value="ASRC2L" />
   <ctl name="AIF1TX2 Input 2" value="ASRC2R" />
-  <ctl name="LHPF1 COEFF FILTER" value="0" />
-  <ctl name="LHPF2 COEFF FILTER" value="0" />
+  <ctl name="LHPF1 COEFF FILTER" value="130Hz" />
+  <ctl name="LHPF2 COEFF FILTER" value="130Hz" />
   <ctl name="Output Compensation Coefficient" value="09 00" />
   <ctl name="AIF1TX1 Input 1 Volume" value="32" />
   <ctl name="AIF1TX1 Input 2 Volume" value="32" />
@@ -212,7 +212,6 @@
 		{ "SPKOUTL Input 1 Volume", 30 },
 		{ "SPKOUTR Input 1 Volume", 32 },
     -->
-    <path name="channel-left" />
     <path name="verb-normal" />
 
     <ctl name="SPK Switch" value="1" />
@@ -231,7 +230,6 @@
 		{ "EPOUT Input 1 Volume", 32 },
 		{ "EPOUT Input 2 Volume", 32 },
     -->
-    <path name="channel-left" />
     <path name="verb-normal" />
 
     <ctl name="RCV Switch" value="1" />
@@ -252,7 +250,6 @@
 		{ "HPOUT1L Input 1 Volume", 32 },
 		{ "HPOUT1R Input 1 Volume", 32 },
     -->
-    <path name="channel-left" />
     <path name="verb-normal" />
 
     <ctl name="Output Compensation Switch" value="1" />
@@ -279,7 +276,6 @@
 		{ "AIF3TX2 Input 1 Volume", 32 },
 		{ "AIF3TX2 Input 2 Volume", 32 },
     -->
-    <path name="channel-none" />
     <path name="verb-normal" />
 
     <ctl name="ASRC1L Input" value="AIF1RX1" />
