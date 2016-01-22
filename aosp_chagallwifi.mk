@@ -1,5 +1,5 @@
 #
-# Copyright 2013 The Android Open-Source Project
+# Copyright 2016 The Android Open-Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,8 +33,6 @@ $(call inherit-product, device/samsung/chagall-klimt-common/device.mk)
 $(call inherit-product, device/samsung/chagallwifi/device.mk)
 
 $(call inherit-product-if-exists, vendor/samsung/chagallwifi/device-vendor.mk)
-
-PRODUCT_NAME := aosp_chagallwifi
 
 PRODUCT_PACKAGES += \
     Launcher3 \
