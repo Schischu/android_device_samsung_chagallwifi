@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Output some debug strings -->
     <item type="bool" name="debug_output">true</item>
 
@@ -27,6 +28,9 @@
     <!--string name="url_base_full">http://dl.omnirom.org/%s/</string-->
     <string name="url_base_full">http://www.duckbox.info/android/chagallwifi/aosp-6.0/</string>
 
+    <!-- URL base to fetch all builds -->
+    <string name="url_base_json">http://www.duckbox.info/android/json.php"</string>
+
     <!-- Applies whole-file signature delta. Adds one extra delta step. Required if recovery verifies signatures -->
     <item type="bool" name="apply_signature">false</item>
     
@@ -52,4 +56,8 @@
         <item>n7000</item>
         <item>i777</item>
     </string-array>
+
+    <string name="official_version_tag">eng.ubuntu</string>
+
+    <string name="android_version">aosp</string>
 </resources>
