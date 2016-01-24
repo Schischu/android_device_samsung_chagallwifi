@@ -34,6 +34,8 @@ $(call inherit-product, device/samsung/chagallwifi/device.mk)
 
 $(call inherit-product-if-exists, vendor/samsung/chagallwifi/device-vendor.mk)
 
+PRODUCT_NAME := aosp_chagallwifi
+
 PRODUCT_PACKAGES += \
     Launcher3 \
     OneTimeInitializer \
