@@ -18,18 +18,18 @@
 
     <!-- URL base to find .delta files, %s is expanded to property_device value. Path is suffixed by (expanded) filename_base -->
     <!--string name="url_base_delta">https://delta.omnirom.org/nightlies/%s/</string-->
-    <string name="url_base_delta">http://www.duckbox.info/android/chagallwifi/aosp-6.0/api.php/%s/</string>
+    <string name="url_base_delta">https://duckbox.de/android/chagallwifi/aosp-6.0/api.php/%s/</string>
 
     <!-- URL base to find .update and .sign files, %s is expanded to property_device value. Path is suffixed by (expanded) filename_base -->
     <!--string name="url_base_update">http://delta.omnirom.org/nightlies/%s/</string-->
-    <string name="url_base_update">http://www.duckbox.info/android/chagallwifi/aosp-6.0/</string>
+    <string name="url_base_update">https://duckbox.de/android/chagallwifi/aosp-6.0/</string>
 
     <!-- URL base to find the full zip files, %s is expanded to property_device value. Path is suffixed by (expanded) filename_base -->
     <!--string name="url_base_full">http://dl.omnirom.org/%s/</string-->
-    <string name="url_base_full">http://www.duckbox.info/android/chagallwifi/aosp-6.0/</string>
+    <string name="url_base_full">https://duckbox.de/android/chagallwifi/aosp-6.0/</string>
 
     <!-- URL base to fetch all builds -->
-    <string name="url_base_json">http://www.duckbox.info/android/json.php"</string>
+    <string name="url_base_json">https://duckbox.de/android/json.php"</string>
 
     <!-- Applies whole-file signature delta. Adds one extra delta step. Required if recovery verifies signatures -->
     <item type="bool" name="apply_signature">false</item>
