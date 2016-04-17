@@ -222,8 +222,8 @@ on boot
 # Permissions Camera
     write /data/CameraID.txt 0
     write /data/cal_data.bin 0
-    chown system radio /data/CameraID.txt
-    chown system radio /data/cal_data.bin
+    chown media audio /data/CameraID.txt
+    chown media audio /data/cal_data.bin
     chown system radio /sys/class/camera/rear/rear_camfw
     chown system radio /sys/class/camera/rear/rear_camtype
     chown system radio /sys/class/camera/flash/rear_flash
@@ -442,16 +442,6 @@ on fs
 #    chown system radio /sys/class/camera/rear/isp_core
     chown system radio /sys/class/camera/front/front_camfw
     chown system radio /sys/class/camera/front/front_camtype
-
-    touch /data/CameraID.txt
-    chown media audio /data/CameraID.txt
-    chmod 0777 /data/CameraID.txt
-
-    touch /data/cal_data.bin
-    chown media audio /data/cal_data.bin
-    chmod 0777 /data/cal_data.bin
-
-    mkdir -p /data/camera 0777 media audio
 
 # Set watchdog timer to 30 seconds and pet it every 10 seconds to get a 20 second margin
 service watchdogd /sbin/watchdogd 10 20
