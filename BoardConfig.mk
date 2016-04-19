@@ -18,6 +18,9 @@ TARGET_PATH := device/samsung/chagallwifi
 
 include device/samsung/chagall-klimt-common/BoardConfig.mk
 
+BOARD_CAMERA_FRONT_ROTATION=0
+BOARD_CAMERA_BACK_ROTATION=0
+
 # Kernel
 TARGET_KERNEL_CONFIG := cyanogenmod_chagallwifi_defconfig
 
