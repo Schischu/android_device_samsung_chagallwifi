@@ -17,6 +17,9 @@
 $(call inherit-product, device/samsung/chagall-klimt-common/device.mk)
 
 PRODUCT_COPY_FILES += \
+    device/samsung/chagallwifi/audio/audio_policy.conf:system/etc/audio_policy.conf
+
+PRODUCT_COPY_FILES += \
     device/samsung/chagallwifi/audio/mixer_paths.xml:system/etc/mixer_paths.xml
 
 # These are the hardware-specific features
