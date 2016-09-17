@@ -2,20 +2,20 @@ import init.universal5420.usb.rc
 import init.universal5420.wifi.rc
 import init.samsung.rc
 
+on early-init
+    mount debugfs /sys/kernel/debug /sys/kernel/debug mode=755
+    
+    write /sys/block/mmcblk0/queue/read_ahead_kb 512
+    write /sys/block/mmcblk1/queue/read_ahead_kb 512
+    write /sys/block/mmcblk0/queue/scheduler noop
+
 on init
     # Set permissions for persist partition
     mkdir /persist 0771 system system
 
-    # Support legacy paths
-    symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0
 
     mkdir /efs 0771 radio system
-
-on early-init
-    write /sys/block/mmcblk0/queue/read_ahead_kb 512
-    write /sys/block/mmcblk1/queue/read_ahead_kb 512
-    write /sys/block/mmcblk0/queue/scheduler noop
 
 on property:sys.boot_completed=1
     write /sys/block/mmcblk0/queue/scheduler bfq
@@ -43,9 +43,13 @@ on property:sys.boot_completed=1
     write /sys/devices/system/cpu/cpufreq/iks-cpufreq/min_freq 400000
 
 on post-fs-data
-    setprop vold.post_fs_data_done 1
+    # Now that are booted all the way and out of mount panics, ensure that we panic on later errors.
+    # This is a hack to work around the fact that we can't recover from all errors that would lead to a panic
+    # during the initial mount (http://b/17382778), yet we need to panic on emmc errors (http://b/17640053)
+    # For a remount only the flags and the target mount point are relevant.
+    mount dummy dummy /data remount nosuid nodev noatime rw seclabel,background_gc=on,user_xattr,acl,errors=panic
 
-# Permissions for bluetooth
+    # Permissions for bluetooth
     setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
     chown bluetooth net_bt_stack /dev/ttySAC0
@@ -54,30 +58,20 @@ on post-fs-data
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
 
-# For kernel lock in BT/WiFi race condtion
+    # For kernel lock in BT/WiFi race condtion
     chmod 0600 /dev/btlock
     chown bluetooth bluetooth /dev/btlock
 
-# Added for TZ Playready DRM Support
+    # Added for TZ Playready DRM Support
     mkdir /efs/drm 0700 drm system
     mkdir /efs/drm/playready 0775 drm system
 
     #Create directory for hostapd
     mkdir /data/hostapd 0770 system wifi
 
-# Bluetooth dhcpcd config
-service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
-    class main
-	disabled
-	oneshot
-
-service iprenew_bt-pan /system/bin/dhcpcd -n
-    class late_start
-	disabled
-	oneshot
+    setprop vold.post_fs_data_done 1
 
 on boot
-    mount debugfs /sys/kernel/debug /sys/kernel/debug
     setprop ro.radio.noril yes
     stop ril-daemon
 
@@ -223,13 +217,23 @@ on boot
     write /data/CameraID.txt 0
     write /data/cal_data.bin 0
     chown media audio /data/CameraID.txt
+    chmod 777 /data/CameraID.txt
+    
     chown media audio /data/cal_data.bin
+    chmod 777 /data/cal_data.bin
+    
     chown system radio /sys/class/camera/rear/rear_camfw
     chown system radio /sys/class/camera/rear/rear_camtype
     chown system radio /sys/class/camera/flash/rear_flash
 #    chown system radio /sys/class/camera/rear/isp_core
     chown system radio /sys/class/camera/front/front_camfw
     chown system radio /sys/class/camera/front/front_camtype
+    
+    # Workaround for dirty flash issue MM->NG
+    mkdir /data/user_de/0/com.android.providers.telephony/files 0777 system system 
+    mkdir /data/user_de/0/com.android.providers.telephony/databases 0777 system system 
+    #write /data/user_de/0/com.android.providers.telephony/databases/HbpcdLookup.db 0
+    #chmod 666 /data/user_de/0/com.android.providers.telephony/databases/HbpcdLookup.db
 
 # Switch Device
     chown system radio /sys/class/sec/switch/otg_test
@@ -370,35 +374,37 @@ on boot
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/param_index
 
 on fs
-
-# Support Preload install apks
+    # Support Preload install apks
     mkdir /preload 0771 system system
+
+    # Enable verity notification
+    write /sys/module/dm_verity/parameters/error_behavior notify
 
     mount_all /fstab.universal5420
 
     setprop ro.crypto.fuse_sdcard true
 
-#For Absolute Persistence Partition 
+    #For Absolute Persistence Partition 
     mkdir /persdata 0755 system system 
     mkdir /persdata/absolute 0750 system system 
       
-    wait /dev/block/platform/dw_mmc.0/by-name/PERSDATA 
+    #wait /dev/block/platform/dw_mmc.0/by-name/PERSDATA 
     # check_fs /dev/block/platform/dw_mmc.0/by-name/PERSDATA ext4 
-    mount ext4 /dev/block/platform/dw_mmc.0/by-name/PERSDATA /persdata/absolute nosuid nodev barrier=1 
+    #mount ext4 /dev/block/platform/dw_mmc.0/by-name/PERSDATA /persdata/absolute nosuid nodev barrier=1 
       
     chown system system /persdata 
     chmod 0755 /persdata 
     chown system system /persdata/absolute 
     chmod 0750 /persdata/absolute 
 
-# Permissions for backlight
+    # Permissions for backlight
     chown system system /sys/class/backlight/panel/brightness
 
-# Permissions for LCD
+    # Permissions for LCD
     chown system radio /sys/class/lcd/panel/lcd_type
     chown system radio /sys/class/lcd/panel/power_reduce
-
-# Permissions for MDNIE
+    
+    # Permissions for MDNIE
     chown system media_rw /sys/class/mdnie/mdnie/mode
     chown system media_rw /sys/class/mdnie/mdnie/scenario
     chown system system /sys/class/mdnie/mdnie/accessibility
@@ -472,20 +478,23 @@ service bttestdaemon /system/bin/bttestd
     disabled
     oneshot
 
-# for ethernet
-service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
-    class main
-    disabled
-    oneshot
-
 # Kick watchdogd if debug_level is low
 on property:ro.debug_level=0x4f4c
-	start watchdogd
+    start watchdogd
 
 # on userdebug and eng builds, enable kgdb on the serial console
 on property:ro.debuggable=1
     write /sys/module/kgdboc/parameters/kgdboc ttyFIQ1
     write /sys/module/fiq_debugger/parameters/kgdb_enable 1
+
+# bugreport is triggered by holding down volume down, volume up and power
+service bugreport /system/bin/dumpstate -d -p -B -z \
+        -o /data/user_de/0/com.android.shell/files/bugreports/bugreport
+    class late_start
+    disabled
+    oneshot
+    keycodes 114 115 116
+
 # SecEDS
 service TvoutService_C /system/bin/bintvoutservice
      class main
