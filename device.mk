@@ -32,6 +32,6 @@ DEVICE_PACKAGE_OVERLAYS += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.carrier=wifi-only
 
-# setup dalvik vm configs.
+# setup dalvik vm configs
 $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
 $(call inherit-product, vendor/samsung/chagallwifi/chagallwifi-vendor.mk)
